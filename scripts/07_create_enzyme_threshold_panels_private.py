@@ -114,7 +114,7 @@ def format_annotation(row: pd.Series) -> str:
     """Format compact annotation text for one panel."""
     return (
         f"\u03C1 = {row['spearman_rho']:.3f}\n"
-        f"Diagnostic threshold = {row['threshold_tree']:.1f}\n"
+        f"Diagnostic threshold = {row['threshold_cate_nelson']:.1f}\n"
         f"IQR of ≥70% yield group = {row['high_yield_p25']:.1f}\u2013{row['high_yield_p75']:.1f}"
     )
 
@@ -123,13 +123,13 @@ def set_x_limits(ax, x_values: pd.Series, row: pd.Series) -> None:
     """Set x-limits with padding around data and summary landmarks."""
     x_min = min(
         x_values.min(),
-        row["threshold_tree"],
+        row["threshold_cate_nelson"],
         row["high_yield_p25"],
         row["high_yield_p75"],
     )
     x_max = max(
         x_values.max(),
-        row["threshold_tree"],
+        row["threshold_cate_nelson"],
         row["high_yield_p25"],
         row["high_yield_p75"],
     )
@@ -165,7 +165,7 @@ def create_single_panel(
         zorder=1,
     )
     ax.axvline(
-        summary_row["threshold_tree"],
+        summary_row["threshold_cate_nelson"],
         color=THRESHOLD_COLOR,
         linestyle="--",
         linewidth=1.6,
@@ -321,7 +321,7 @@ def main() -> None:
         row = summary_lookup[config["indicator"]]
         print(
             f"- {config['indicator']}: "
-            f"tree threshold = {row['threshold_tree']:.3f}; "
+            f"tree threshold = {row['threshold_cate_nelson']:.3f}; "
             f"high-yield IQR = {row['high_yield_p25']:.3f} to {row['high_yield_p75']:.3f}; "
             f"Spearman rho = {row['spearman_rho']:.3f}"
         )
