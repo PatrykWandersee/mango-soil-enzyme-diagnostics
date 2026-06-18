@@ -114,8 +114,8 @@ def format_annotation(row: pd.Series) -> str:
     """Format compact annotation text for one panel."""
     return (
         f"\u03C1 = {row['spearman_rho']:.3f}\n"
-        f"Critical level = {row['threshold_tree']:.1f}\n"
-        f"IQR \u226570% = {row['high_yield_p25']:.1f}\u2013{row['high_yield_p75']:.1f}"
+        f"Diagnostic threshold = {row['threshold_tree']:.1f}\n"
+        f"IQR of ≥70% yield group = {row['high_yield_p25']:.1f}\u2013{row['high_yield_p75']:.1f}"
     )
 
 
@@ -263,7 +263,7 @@ def create_panel_figure(
             color=THRESHOLD_COLOR,
             linestyle="--",
             linewidth=1.6,
-            label="Critical level",
+            label="Diagnostic threshold",
         ),
         Line2D(
             [0],
@@ -271,12 +271,12 @@ def create_panel_figure(
             color=YIELD_LINE_COLOR,
             linestyle=":",
             linewidth=1.6,
-            label=f"Sufficiency level ({YIELD_CUTOFF:.0f}%)",
+            label=f"Relative yield cutoff ({YIELD_CUTOFF:.0f}%)",
         ),
         Patch(
             facecolor=IQR_COLOR,
             alpha=0.45,
-            label=f"High-yield IQR (\u2265{YIELD_CUTOFF:.0f}%)",
+            label=f"IQR of ≥{YIELD_CUTOFF:.0f}% yield group",
         ),
     ]
 
